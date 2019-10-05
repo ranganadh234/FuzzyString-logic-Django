@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- Custom -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!--  Lightbox -->
+    <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
+  <title>Fuzzysearch</title>
+
+</head>
+<body>
+  <section id="register" class="bg-light py-5">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 mx-auto">
+                <div class="card">
+                  <div class="card-header bg-primary text-white">
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div>
+                          <strong>{{message|safe}}</strong>
+                        </div >
+                        {% endfor %}
+                        {% else %}
+                        {{order}}
+                        <div class="card-body">
+                        <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <label>Upload a file</label>
+                          <input type="file" name="file">
+                          <p>Only accepts tsv files</p>
+                          <button type="submit" value="Upload" style="font-size: 16px;  color: black;">Upload</button>
+                        </form>
+                        </div>
+                        {% endif %}
+                        </div>
+                        </div>
+                        </div>
+                  <div>
+              </div>
+          </section>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
+    <script src="{% static 'js/main.js' %} "></script>
+    <script src="{% static 'js/lightbox.min.js' %} "></script>
+</body>
+</html>
