@@ -52,12 +52,13 @@ def search(request):
         for obj in word_list:
             if obj not in words:
                 words.append(obj)
+        # Creting JSON array with 25 elements ranked by above criteria
+        serialized_obj = serializers.serialize('json', words)
+        serialized_obj = eval(serialized_obj)
 
     else:
-        words=None
-    # Creting JSON array with 25 elements ranked by above criteria
-    serialized_obj = serializers.serialize('json', words)
-    serialized_obj = eval(serialized_obj)
+        serialized_obj=None
+
     context={
         'word_list':serialized_obj,
         'word':request.GET.get('q',None)

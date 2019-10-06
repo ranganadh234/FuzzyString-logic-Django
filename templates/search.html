@@ -40,13 +40,14 @@
           <hr/>
           {% endif %}
       </div>
-
+    {% if word_list %}
     <div class="container" >
           {% for obj in word_list %}
-          <h1>{{ forloop.counter }}: {{ obj.fields }}</h1>
+          <p>{{ forloop.counter }}: {{ obj.fields }}</p>
           <br/>
           {% endfor %}
   </div>
+  {% endif %}
     <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
     <script src="{% static 'js/main.js' %} "></script>
