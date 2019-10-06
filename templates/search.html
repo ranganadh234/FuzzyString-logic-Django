@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- Custom -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!--  Lightbox -->
+    <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
+  <title>Fuzzysearch</title>
+
+</head>
+<body>
+
+        <div class='col-12 col-md-6 mx-auto py-5'>
+          <form method='GET' action="{% url 'search' %}" class="form my-2 my-lg-0">
+            <div class='input-group'>
+              <input class="form-control " type="search" placeholder="Search" name='q' aria-label="Search" value="{{request.GET.q}}">
+              <span class='input-group-btn'>
+                <button class="btn btn-outline-success " type="submit">Search</button>
+              </span>
+            </div>
+          </form>
+        </div>
+        <div class='col-12'>
+                <hr/>
+        </div>
+
+</div>
+<div class='row mb-3'>
+      {% if word %}
+      <div class='col-12' >
+          Searched for <strong>{{ word }}</strong>
+          <hr/>
+          {% endif %}
+      </div>
+
+    <div class="container" >
+          {% for obj in word_list %}
+          <h1>{{ forloop.counter }}: {{ obj.word }}</h1>
+          <br/>
+          {% endfor %}
+  </div>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
+    <script src="{% static 'js/main.js' %} "></script>
+    <script src="{% static 'js/lightbox.min.js' %} "></script>
+</body>
+</html>

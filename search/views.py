@@ -1,12 +1,18 @@
 import csv,io
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from .forms import FileForm
+from django.views.generic import ListView
+import json
 from .models import WordModel
 
+
+# View method for uploading .tsv file in to database
 @permission_required('admin.can_add_log_entry')
 def upload_file(request):
+    '''
+    View method to upload a .tsv file to database.
+    '''
     template='form.html'
     prompt={
         'order':'Order of TSV should be word and its rank'
@@ -26,3 +32,27 @@ def upload_file(request):
         )
     context={}
     return render(request,template,context)
+
+
+
+def search(request):
+    '''
+    View method to search a word given by user and print first 25 results of that search.
+    '''
+    queryset_list=WordModel.objects.order_by('-rank')
+    query=request.GET.get('q',None)
+    if query is not None:
+        word_list=queryset_list.filter(word__icontains=request.GET['q'])
+        words=[]
+        if len(word_list)>25:
+            for i in range(25):
+                words.append(word_list[i])
+        else:
+            words=word_list
+    else:
+        words=None
+    context={
+        'word_list':words,
+        'word':request.GET.get('q',None)
+    }
+    return render(request,'search.html',context)
