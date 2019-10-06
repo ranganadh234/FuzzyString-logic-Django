@@ -45,10 +45,19 @@ def search(request):
     if query is not None:
         word_list=queryset_list.filter(word__icontains=request.GET['q'])[:25]
         word_list=sorted(word_list,key=lambda o:(len(o.word),o.frequency))
+        words=[]
+        # Arrange the results using startswith method.
+        for obj in word_list:
+            if obj.word.startswith(query):
+                words.append(obj)
+        for obj in word_list:
+            if obj not in words:
+                words.append(obj)
+
     else:
-        word_list=None
+        words=None
     context={
-        'word_list':word_list,
+        'word_list':words,
         'word':request.GET.get('q',None)
     }
     return render(request,'search.html',context)
