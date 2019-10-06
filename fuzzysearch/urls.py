@@ -19,6 +19,6 @@ from search.views import upload_file
 from search.views import search
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('form/',upload_file,name='upload'),
+    path('',upload_file,name='upload'),
     path('search/',search,name='search'),
 ]

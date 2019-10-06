@@ -1,7 +1,6 @@
 import csv,io
 from django.shortcuts import render
 from django.contrib import messages
-from django.contrib.auth.decorators import permission_required
 from django.views.generic import ListView
 from django.core import serializers
 import json
@@ -9,7 +8,6 @@ from .models import WordModel
 
 
 # View method for uploading .tsv file in to database
-@permission_required('admin.can_add_log_entry')
 def upload_file(request):
     '''
     View method to upload a .tsv file to database.
