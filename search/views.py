@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.views.generic import ListView
-from django.db.models.functions import Length
+from django.core import serializers
 import json
 from .models import WordModel
 
@@ -41,6 +41,7 @@ def search(request):
     View method to search a word given by user and print first 25 results of that search.
     '''
     queryset_list=WordModel.objects.order_by('-frequency')
+
     query=request.GET.get('q',None)
     if query is not None:
         word_list=queryset_list.filter(word__icontains=request.GET['q'])[:25]
@@ -56,8 +57,11 @@ def search(request):
 
     else:
         words=None
+    # Creting JSON array with 25 elements ranked by above criteria
+    serialized_obj = serializers.serialize('json', words)
+    serialized_obj = eval(serialized_obj)
     context={
-        'word_list':words,
+        'word_list':serialized_obj,
         'word':request.GET.get('q',None)
     }
     return render(request,'search.html',context)
